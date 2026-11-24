@@ -13,6 +13,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemPurple
+        
+        Task {
+                do {
+                    let products = try await ProductService().fetchProducts()
+                    print("Loaded \(products.count) products")
+                    print(products.first?.title ?? "no products")
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+
     }
 
 
