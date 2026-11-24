@@ -11,6 +11,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Pre-loved"
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemPurple
         
