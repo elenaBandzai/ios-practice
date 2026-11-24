@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     private let tableView = UITableView()
-    private let items = ["Jacket", "Jeans", "Sneakers"]
+    private var products: [Product] = []
 
 
     override func viewDidLoad() {
@@ -17,12 +17,11 @@ class ViewController: UIViewController {
         title = "Pre-loved"
         
         setUpTableView()
+        loadProducts()
     }
     
     private func setUpTableView() {
         view.addSubview(tableView)
-    
-        tableView.backgroundColor = .systemYellow
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -35,19 +34,32 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
+    
+    private func loadProducts() {
+        Task {
+            do {
+                products = try await ProductService().fetchProducts()
+                tableView.reloadData()
+            } catch {
+                print("Error: \(error)")
+            }
+        }
+    }
 
 }
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         var content = cell.defaultContentConfiguration()
+        let product = products[indexPath.row]
         
-        content.text = items[indexPath.row]
+        content.text = product.title
+        content.secondaryText = "€\(product.price)"
         cell.contentConfiguration = content
         
         return cell
