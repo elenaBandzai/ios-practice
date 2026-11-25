@@ -19,6 +19,7 @@ struct ProductService: ProductServiceProtocol {
     private let url = URL(string: "https://dummyjson.com/products?limit=30")!
 
     func fetchProducts() async throws -> [Product] {
+        try await Task.sleep(for: .seconds(2))
         let (data, _) = try await URLSession.shared.data(from: url) //returns a tuple [data, response]
         
         let response = try JSONDecoder().decode(ProductsResponse.self, from: data)
