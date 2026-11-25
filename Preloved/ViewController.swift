@@ -35,8 +35,10 @@ class ViewController: UIViewController {
     
     private func setUpVIP() {
         let presenter = ProductListPresenter()
-        let interactor = ProductListInteractor(presenter: presenter, service: ProductService())
+        let router = ProductListRouter()
+        let interactor = ProductListInteractor(presenter: presenter, service: ProductService(), router: router)
         presenter.viewController = self
+        router.viewController = self
         self.interactor = interactor
     }
     
@@ -53,6 +55,8 @@ class ViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        tableView.delegate = self
     }
     
     private func setUpRefreshControl() {
@@ -154,5 +158,12 @@ extension ViewController: ProductListDisplayLogic {
             errorLabel.text = message
             errorView.isHidden = false
         }
+    }
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        interactor?.selectProduct(at: indexPath.row)
     }
 }
