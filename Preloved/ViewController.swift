@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     private let errorLabel = UILabel()
     private let retryButton = UIButton()
     
+    private let refreshControl = UIRefreshControl()
+    
     private var displayedProducts: [ProductList.DisplayedProduct] = []
     private var interactor: ProductListBusinessLogic?
 
@@ -50,6 +52,11 @@ class ViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        refreshControl.addAction(UIAction { [weak self] _ in
+            self?.loadProducts()
+        }, for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     private func setUpSpinner() {
@@ -124,13 +131,19 @@ extension ViewController: ProductListDisplayLogic {
 
         switch viewModel {
         case .loading:
-            spinner.startAnimating()
+            if displayedProducts.isEmpty {
+                spinner.startAnimating()     
+            }
 
         case .loaded(let products):
+            refreshControl.endRefreshing()
             displayedProducts = products
             tableView.reloadData()
 
         case .error(let message):
+            refreshControl.endRefreshing()
+            displayedProducts = []
+            tableView.reloadData()
             errorLabel.text = message
             errorView.isHidden = false
         }
