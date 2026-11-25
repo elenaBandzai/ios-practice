@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         setUpTableView()
         setUpSpinner()
         setUpErrorView()
+        setUpRefreshControl()
         loadProducts()
     }
     
@@ -52,9 +53,15 @@ class ViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
+    }
+    
+    private func setUpRefreshControl() {
         refreshControl.addAction(UIAction { [weak self] _ in
-            self?.loadProducts()
+            guard let self else { return }
+            if self.spinner.isAnimating {
+                self.refreshControl.endRefreshing()
+            }
+            self.loadProducts()
         }, for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
@@ -132,7 +139,7 @@ extension ViewController: ProductListDisplayLogic {
         switch viewModel {
         case .loading:
             if displayedProducts.isEmpty {
-                spinner.startAnimating()     
+                spinner.startAnimating()
             }
 
         case .loaded(let products):
