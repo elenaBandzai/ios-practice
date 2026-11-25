@@ -33,7 +33,7 @@ final class ProductListInteractor: ProductListBusinessLogic {
             let response = ProductList.Response(products: products)
             presenter.presentProducts(response: response)
         } catch {
-            print("Error: \(error)")
+            presenter.presentError()
         }
     }
 

@@ -117,17 +117,6 @@ extension ViewController: UITableViewDataSource {
     
 }
 
-//extension ViewController: ProductListDisplayLogic {
-//    func displayLoading() {
-//        spinner.startAnimating()
-//    }
-//    
-//    func displayProducts(viewModel: ProductList.ViewModel) {
-//        spinner.stopAnimating()
-//        displayedProducts = viewModel.displayedProducts
-//        tableView.reloadData()
-//    }
-//}
 extension ViewController: ProductListDisplayLogic {
     func display(viewModel: ProductList.ViewModel) {
         spinner.stopAnimating()

@@ -6,6 +6,7 @@ protocol ProductListDisplayLogic: AnyObject {
 
 protocol ProductListPresentationLogic {
     func presentLoading()
+    func presentError()
     func presentProducts(response: ProductList.Response)
 }
 
@@ -25,6 +26,11 @@ final class ProductListPresenter: ProductListPresentationLogic {
     
     func presentLoading() {
         viewController?.display(viewModel: .loading)
+    }
+    
+    func presentError() {
+        let message = "Couldn't load products. Check your connection and try again."
+        viewController?.display(viewModel: .error(message: message))
     }
     
     private func formatPrice(_ price: Double) -> String {
