@@ -12,12 +12,17 @@ protocol ProductListPresentationLogic {
 
 final class ProductListPresenter: ProductListPresentationLogic {
     weak var viewController: ProductListDisplayLogic?
+    private let priceFormatter: PriceFormatter
 
+    init(priceFormatter: PriceFormatter = PriceFormatter()) {
+        self.priceFormatter = priceFormatter
+    }
+    
     func presentProducts(response: ProductList.Response) {
         let displayedProducts = response.products.map { product in
             ProductList.DisplayedProduct(
                 title: product.title,
-                price: formatPrice(product.price),
+                price: priceFormatter.string(from: product.price),
                 imageURL: product.thumbnail
             )
         }
@@ -32,9 +37,5 @@ final class ProductListPresenter: ProductListPresentationLogic {
     func presentError() {
         let message = "Couldn't load products. Check your connection and try again."
         viewController?.display(viewModel: .error(message: message))
-    }
-    
-    private func formatPrice(_ price: Double) -> String {
-        price.formatted(.currency(code: "EUR"))
     }
 }

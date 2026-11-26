@@ -88,7 +88,7 @@ private struct FavoriteButton: View {
 private struct PriceTag: View {
     let price: Double
     var body: some View {
-        Text(price, format: .currency(code: "EUR"))
+        Text(PriceFormatter().string(from: price))
             .font(.title3)
             .padding()
             .background(Color(.secondarySystemBackground))

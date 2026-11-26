@@ -13,13 +13,13 @@ enum ProductList {
         let products: [Product]
     }
 
-    enum ViewModel {
+    enum ViewModel: Equatable {
         case loading
         case loaded([DisplayedProduct])
         case error(message: String)
     }
 
-    struct DisplayedProduct {
+    struct DisplayedProduct: Equatable {
         let title: String
         let price: String
         let imageURL: URL
