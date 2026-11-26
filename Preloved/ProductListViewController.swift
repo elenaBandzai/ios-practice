@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ProductListViewController: UIViewController {
     private let tableView = UITableView()
     private let spinner = UIActivityIndicatorView(style: .large)
     
@@ -118,7 +118,7 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: UITableViewDataSource {
+extension ProductListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return displayedProducts.count
     }
@@ -151,7 +151,7 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: ProductListDisplayLogic {
+extension ProductListViewController: ProductListDisplayLogic {
     func display(viewModel: ProductList.ViewModel) {
         spinner.stopAnimating()
         errorView.isHidden = true
@@ -177,7 +177,7 @@ extension ViewController: ProductListDisplayLogic {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension ProductListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         interactor?.selectProduct(at: indexPath.row)
