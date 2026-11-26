@@ -34,8 +34,9 @@ final class ProductListPresenter: ProductListPresentationLogic {
         viewController?.display(viewModel: .loading)
     }
     
+    static let loadErrorMessage = "Couldn't load products. Check your connection and try again."
+
     func presentError() {
-        let message = "Couldn't load products. Check your connection and try again."
-        viewController?.display(viewModel: .error(message: message))
+        viewController?.display(viewModel: .error(message: Self.loadErrorMessage))
     }
 }
