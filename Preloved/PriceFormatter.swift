@@ -1,10 +1,3 @@
-//
-//  PriceFormatter.swift
-//  Preloved
-//
-//  Created by Elena Bandzaite on 26/11/2026.
-//
-
 import Foundation
 
 struct PriceFormatter {

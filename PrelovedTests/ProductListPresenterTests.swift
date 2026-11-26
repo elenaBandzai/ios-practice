@@ -1,10 +1,3 @@
-//
-//  ProductListPresenterTests.swift
-//  PrelovedTests
-//
-//  Created by Elena Bandzaite on 26/11/2026.
-//
-
 import Foundation
 import Testing
 @testable import Preloved

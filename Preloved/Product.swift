@@ -1,10 +1,3 @@
-//
-//  Product.swift
-//  Preloved
-//
-//  Created by Elena Bandzaite on 24/11/2026.
-//
-
 import Foundation
 
 nonisolated struct Product: Decodable, Equatable {

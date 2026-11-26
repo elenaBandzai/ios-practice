@@ -1,10 +1,3 @@
-//
-//  ProductListInteractor.swift
-//  Preloved
-//
-//  Created by Elena Bandzaite on 25/11/2026.
-//
-
 import Foundation
 
 protocol ProductListBusinessLogic {
