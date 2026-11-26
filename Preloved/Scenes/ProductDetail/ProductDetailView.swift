@@ -72,7 +72,7 @@ private struct ExpandableText: View {
     }
 }
 
-
+// TODO: Favorites are not persisted yet. Save them and show them in the product list.
 private struct FavoriteButton: View {
     @State private var isFavorite = false
     
