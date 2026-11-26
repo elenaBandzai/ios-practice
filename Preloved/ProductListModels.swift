@@ -22,5 +22,6 @@ enum ProductList {
     struct DisplayedProduct {
         let title: String
         let price: String
+        let imageURL: URL
     }
 }

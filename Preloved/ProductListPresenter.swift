@@ -17,7 +17,8 @@ final class ProductListPresenter: ProductListPresentationLogic {
         let displayedProducts = response.products.map { product in
             ProductList.DisplayedProduct(
                 title: product.title,
-                price: formatPrice(product.price)
+                price: formatPrice(product.price),
+                imageURL: product.thumbnail
             )
         }
 

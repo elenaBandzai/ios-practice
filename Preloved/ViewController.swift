@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     
     private var displayedProducts: [ProductList.DisplayedProduct] = []
     private var interactor: ProductListBusinessLogic?
+    
+    private let imageLoader = ImageLoader()
 
 
     override func viewDidLoad() {
@@ -128,11 +130,25 @@ extension ViewController: UITableViewDataSource {
         
         content.text = product.title
         content.secondaryText = product.price
+        
+        content.image = UIImage(systemName: "photo")
+        content.imageProperties.maximumSize = CGSize(width: 60, height: 60)
+        content.imageProperties.reservedLayoutSize = CGSize(width: 60, height: 60)
+        content.imageProperties.cornerRadius = 8
+        
         cell.contentConfiguration = content
+        
+        Task {
+            guard let image = await imageLoader.loadImage(from: product.imageURL) else { return }
+            guard let visibleCell = tableView.cellForRow(at: indexPath) else { return }
+    
+            var updatedContent = content
+            updatedContent.image = image
+            visibleCell.contentConfiguration = updatedContent
+        }
         
         return cell
     }
-    
 }
 
 extension ViewController: ProductListDisplayLogic {
